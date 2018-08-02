@@ -1,5 +1,5 @@
 # Valuable
-<<<<<<< HEAD
+
 A lightweight async library on Android
 =======
 Valuable 是一个轻量的异步库。
@@ -270,4 +270,3 @@ immediate 有些不一样的是，如果异步任务在执行，带 immediate �
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
->>>>>>> Feature: initial release candidate 1
