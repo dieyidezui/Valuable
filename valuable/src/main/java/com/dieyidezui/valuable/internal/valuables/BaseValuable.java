@@ -146,7 +146,7 @@ public class BaseValuable<T> extends Valuable<T> {
 
     Valuable<T> complete(@Nullable Consumer<? super T> consumer, @Nullable Scheduler consumerScheduler,
                          @Nullable Consumer<? super Exception> handler, @Nullable Scheduler handlerScheduler) {
-        consumers.register(consumer, consumerScheduler, handler, handlerScheduler, ref.get());
+        consumers.register(consumer, consumerScheduler, handler, handlerScheduler, ref);
         return this;
     }
 
@@ -199,13 +199,13 @@ public class BaseValuable<T> extends Valuable<T> {
             this.consumerScheduler = consumerScheduler;
         }
 
-        void enqueueOrCall(ConcurrentLinkedQueue<ResultConsumer> queue, AtomicInteger state, Scheduler scheduler, Result<?> result) {
+        <T> void enqueueOrCall(ConcurrentLinkedQueue<ResultConsumer> queue, AtomicInteger state, Scheduler scheduler, AtomicReference<Result<T>> ref) {
             int old = state.getAndIncrement();
             if (old > 0) {
                 queue.offer(this);
             } else {
                 state.decrementAndGet();
-                call(result, scheduler, false);
+                call(ref.get(), scheduler, false);
             }
         }
 
@@ -263,7 +263,7 @@ public class BaseValuable<T> extends Valuable<T> {
         }
 
         void register(@Nullable Consumer<? super T> consumer, @Nullable Scheduler consumerScheduler,
-                      @Nullable Consumer<? super Exception> handler, @Nullable Scheduler handlerScheduler, Result<T> t) {
+                      @Nullable Consumer<? super Exception> handler, @Nullable Scheduler handlerScheduler, AtomicReference<Result<T>> t) {
             if (consumer != null) {
                 new ResultConsumer(true, consumer, consumerScheduler).enqueueOrCall(queue, state, origin, t);
             }

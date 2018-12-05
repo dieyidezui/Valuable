@@ -10,7 +10,7 @@ Valuable 是一个轻量的异步库。
 在 build.gradle 中加入以下一行即可
 
 ```groovy
-implementation 'com.dieyidezui.valuable:valuable:1.0.0-rc1'
+implementation 'com.dieyidezui.valuable:valuable:1.0.0'
 ```
 
 ## 使用 Valuable
